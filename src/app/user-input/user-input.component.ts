@@ -1,6 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core'; // 🌟 Pastikan Output & EventEmitter di-import
 import { FormsModule } from '@angular/forms';
-import { InvestmentService } from '../../investment-results';
 
 @Component({
   selector: 'app-user-input',
@@ -12,17 +11,24 @@ import { InvestmentService } from '../../investment-results';
 export class UserInputComponent {
   enteredInitialInvestment = '0';
   enteredAnnualInvestment = '0';
-  enteredDuration = '5';
-  enteredExpectedReturn = '10';
+  enteredExpectedReturn = '5';
+  enteredDuration = '10';
 
-  constructor(private investmentService: InvestmentService) { }
+  // 🌟 Buat gerbang Output bernama 'calculate' untuk melempar data ke AppComponent
+  @Output() calculate = new EventEmitter<{
+    initialInvestment: number;
+    duration: number;
+    expectedReturn: number;
+    annualInvestment: number;
+  }>();
 
   onSubmit() {
-    this.investmentService.calculateInvestmentResults({
+    // 🌟 Pancarkan datanya ke atas, ubah string menjadi angka menggunakan tanda plus (+)
+    this.calculate.emit({
       initialInvestment: +this.enteredInitialInvestment,
-      annualInvestment: +this.enteredAnnualInvestment,
+      duration: +this.enteredDuration,
       expectedReturn: +this.enteredExpectedReturn,
-      duration: +this.enteredDuration
+      annualInvestment: +this.enteredAnnualInvestment
     });
   }
 }

@@ -9,15 +9,6 @@ import { Injectable } from "@angular/core";
 })
 
 export class InvestmentService {
-  resultData?: {
-    year: number;
-    interest: number;
-    valueEndOfYear: number;
-    annualInvestment: number;
-    totalInterest: number;
-    totalAmountInvested: number;
-  }[];
-
   calculateInvestmentResults(data: {
     initialInvestment: number;
     duration: number;
@@ -43,9 +34,7 @@ export class InvestmentService {
         totalAmountInvested: data.initialInvestment + data.annualInvestment * year,
       });
     }
-
-    // Masukkan hasil susunan array ke dalam wadah resultData di atas
-    this.resultData = annualData;
-  } // 🌟 Pastikan kurung kurawal penutup fungsi ada di sini
+    return annualData;
+  }
 }
 
